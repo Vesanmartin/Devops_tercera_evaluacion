@@ -61,7 +61,7 @@ jobs:
         with:
           version: v1.29.0
 
-      -  - name: Configurar kubeconfig para EKS
+      - name: Configurar kubeconfig para EKS
         run: |
           aws eks update-kubeconfig \
             --region us-east-1 \
@@ -82,35 +82,4 @@ jobs:
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
           kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/backend-deployment.yaml -n $EKS_NAMESPACE
-          kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/backend-service.yaml -n $EKS_NAMESPACE
-          kubectl set image deployment/tienda-backend \
-            backend=$ECR_REGISTRY/${ECR_REPO_BACKEND}:${IMAGE_TAG} \
-            -n $EKS_NAMESPACE
-          kubectl rollout status deployment/tienda-backend -n $EKS_NAMESPACE
-
-      - name: Actualizar FRONTEND en EKS
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
-        run: |
-          kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/frontend-deployment.yaml -n $EKS_NAMESPACE
-          kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/frontend-service.yaml -n $EKS_NAMESPACE
-          kubectl set image deployment/tienda-frontend \
-            frontend=$ECR_REGISTRY/${ECR_REPO_FRONTEND}:${IMAGE_TAG} \
-            -n $EKS_NAMESPACE
-          kubectl rollout status deployment/tienda-frontend -n $EKS_NAMESPACE
-
-      - name: Aplicar HPA
-        env:
-          EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
-        run: |
-          kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/backend-hpa.yaml -n $EKS_NAMESPACE
-          kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/frontend-hpa.yaml -n $EKS_NAMESPACE
-
-      - name: Ver estado final
-        env:
-          EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
-        run: |
-          kubectl get pods -n $EKS_NAMESPACE
-          kubectl get svc -n $EKS_NAMESPACE
-          kubectl get hpa -n $EKS_NAMESPACE || true
+          kubectl apply -f 3.6.3\ APP\ tienda-perritos-EKS_GITHUB/k8s/backend-s
