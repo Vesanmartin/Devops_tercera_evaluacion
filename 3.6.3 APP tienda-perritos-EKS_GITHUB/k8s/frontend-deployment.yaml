@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: tienda-frontend
+        annotations:
+        eks.amazonaws.com/compute-type: auto
     spec:
       containers:
         - name: frontend
