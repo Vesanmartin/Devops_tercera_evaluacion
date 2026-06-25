@@ -12,9 +12,7 @@ spec:
     metadata:
       labels:
         app: tienda-backend
-      annotations:
-        eks.amazonaws.com/compute-type: auto
-    spec:
+     spec:
       containers:
         - name: backend
           image: 967151910149.dkr.ecr.us-east-1.amazonaws.com/tienda-backend:eks-v1
