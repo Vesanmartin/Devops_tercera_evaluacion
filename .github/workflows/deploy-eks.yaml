@@ -61,14 +61,11 @@ jobs:
         with:
           version: v1.29.0
 
-      - name: Configurar kubeconfig para EKS
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
+      -  - name: Configurar kubeconfig para EKS
         run: |
           aws eks update-kubeconfig \
-            --region $AWS_REGION \
-            --name $EKS_CLUSTER_NAME
+            --region us-east-1 \
+            --name tienda-perritos-eks
 
       - name: Aplicar manifests base
         env:
