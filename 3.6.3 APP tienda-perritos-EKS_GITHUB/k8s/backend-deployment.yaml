@@ -8,6 +8,8 @@ spec:
   selector:
     matchLabels:
       app: tienda-backend
+      annotations:
+      eks.amazonaws.com/compute-type: auto
   template:
     metadata:
       labels:
