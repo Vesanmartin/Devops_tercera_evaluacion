@@ -85,12 +85,12 @@ jobs:
             frontend=$ECR_REGISTRY/${ECR_REPO_FRONTEND}:${IMAGE_TAG} \
             -n $EKS_NAMESPACE
           kubectl rollout status deployment/tienda-frontend -n $EKS_NAMESPACE --timeout=120s
-      - name: Aplicar HPA
+      - - name: Aplicar HPA
         env:
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
-          kubectl apply -f "3.6.3 APP tienda-perritos-EKS_GITHUB/k8s/backend-hpa.yaml" -n $EKS_NAMESPACE
-          kubectl apply -f "3.6.3 APP tienda-perritos-EKS_GITHUB/k8s/frontend-hpa.yaml" -n $EKS_NAMESPACE
+          kubectl apply -f "3.6.3 APP tienda-perritos-EKS_GITHUB/k8s/backend-hpa.yaml" -n $EKS_NAMESPACE --server-side --force-conflicts
+          kubectl apply -f "3.6.3 APP tienda-perritos-EKS_GITHUB/k8s/frontend-hpa.yaml" -n $EKS_NAMESPACE --server-side --force-conflicts
       - name: Ver estado final
         env:
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
